@@ -1,0 +1,80 @@
+syntax = "proto3";
+import "common.proto";
+
+//Loop 2400
+message ServiceLineInfo{
+    repeated LineItem line_items = 10;
+}
+//Segment LX
+message LineItem{
+    Service service = 10;
+    Date date = 20;
+    Reference reference = 30;
+
+}
+//Segment SV1/SV5
+message Service{
+    enum CodeType{
+        CODE_TYPE_HC = 0;
+    }
+    CodeType code_type = 10;
+    //CPT Code or HCPCS Code
+    int64 code = 20;
+    repeated string modifiers = 30;
+    string description = 40;
+    float charge_amount = 50;
+    string basis_for_measurement = 60;
+    int32 quantity = 70;
+    string facility_code = 80;
+    //ICD Codes
+    repeated int32 diagnosis_code_pointer  =90;
+
+
+}
+
+//Segment SE
+message TransactionSetTrailer{
+    int32 service_count = 10;
+    int64 set_control_number = 20;
+}
+
+//Loop 2430 - Line Adjudication:
+message LineAdjudication{
+    ServiceLineAdjudication service_line_adjudication = 10;
+    repeated ClaimAdjustment claim_adjustment = 20;
+    Date remittance_date = 30;
+    Amount amt = 40;
+}
+//Segment SVD - Service Line Adjudication
+message ServiceLineAdjudication{
+    string payer_id = 10;
+    float monetary_amount = 20;
+    CodeType code_type = 30;
+    int64 cpt_code = 40;
+    repeated string modifiers = 50;
+    string description = 60;
+    int32 quantity = 70;
+}
+//Segment CAS - Claim Adjustment
+message ClaimAdjustment{
+    enum GroupCode{
+        GROUP_CODE_CONTRACTUAL_OBLIGATION = 0;
+        GROUP_CODE_PATIENT_RESPONSIBLITY = 1;
+        GROUP_CODE_OTHER_ADJUSTMENT = 2;
+        GROUP_CODE_CLAIM_REVERSAL = 3;
+        GROUP_CODE_PAYER_INITIATED_REDUCTION = 4;
+    }
+    enum AdjustmentReason{
+        ADJUSTMENT_REASON_DEDUCTIBLE = 0;
+        ADJUSTMENT_REASON_COINSURANCE = 1;
+        ADJUSTMENT_REASON_COPAY = 2 ;
+        ADJUSTMENT_REASON_CONTRACTED_RATE = 3;
+        ADJUSTMENT_REASON_SEQUESTRATION = 4; 
+    }
+    
+    GroupCode group_code = 10;
+    AdjustmentReason adjustment_reason = 20;
+    float monetary_amount = 30;
+
+
+}

@@ -1,0 +1,37 @@
+syntax="proto3";
+import "common.proto";
+// Loop 2000A
+message ProviderLoop{
+    ProviderInfo provider_info = 10;
+    BPName name= 20;
+    PTPName name = 30;
+  }
+
+  //Loop 2010AA
+  message BPName{
+    Name name = 10;
+    Address address = 20;
+    CityStateZip csz = 30;
+    Refernce ref = 40;
+    Contact contact = 50;
+  }
+  
+  //Segment PER
+  message Contact{
+    enum ContactCodeQualifier{
+      INFORMATION_CONTACT=0;
+    }
+    string contact_name = 10;
+    enum InformationCodeQualifier{
+        TE = 0;
+        EX = 1;
+    }
+    string information_code = 20;
+  }
+  //Loop 2010AB
+  message PTPName{
+    Name name = 10;
+    Address address = 20;
+    CityStateZip csz = 30;
+  }
+  

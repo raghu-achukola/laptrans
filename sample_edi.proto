@@ -1,0 +1,14 @@
+syntax = "proto3";
+import "common.proto";
+import "provider_loop.proto";
+import "subscriber_loop.proto";
+import "claim_info.proto";
+import "service_line.proto";
+message EDI837P{
+  ProviderLoop provider_loop = 10;
+  SubscriberLoop subscriber_loop = 20;
+  ClaimInfo claim_info = 30;
+  ServiceLineInfo service_line_info=40
+}
+
+

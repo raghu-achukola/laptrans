@@ -1,0 +1,99 @@
+syntax = "proto3";
+import "common.proto";
+
+message SubscriberLoop{
+    Hierarchy hierarchy = 10;
+    Subscriber subscriber = 20;
+    
+    
+}
+
+//Segment SBR
+message Subscriber{
+    enum PayerResponsibility{
+      PAYER_RESPONSIBILITY_PRIMARY = 1;
+      PAYER_RESPONSIBILITY_SECONDARY=2;
+      PAYER_RESPONSIBILITY_TERTIARY=3;
+    }
+    PayerResponsibility payer_responsibility = 10;
+    enum ClientRelationship{
+      CLIENT_RELATIONSHIP_SPOUSE = 1;
+      CLIENT_RELATIONSHIP_SELF=2;
+      CLIENT_RELATIONSHIP_CHILD=3;
+      CLIENT_RELATIONSHIP_OTHER=4;
+    }
+    ClientRelationship client_relationship = 20;
+    string policy_group_number = 30;
+    string plan_program=40;
+    enum MSPCode{
+      MSP_CODE_WORKING_AGE = 0;
+      MSP_CODE_ENDSTAGE_RENTAL=1;
+      MSP_CODE_NOFAULT_INCLUDING_AUTO=2;
+      MSP_CODE_WORKERS_COMPENSATION=3;
+      MSP_CODE_PUBLIC_HEALTH_OR_FEDERAL=4;
+      MSP_CODE_SECONDARY_BLACK_LUNG=5;
+      MSP_CODE_VETERANS_ADMINISTRATION=6;
+      MSP_CODE_DISABLED_UNDER_65 =7;
+      MSP_CODE_OTHER_LIABILITY_IS_PRIMARY=8;
+    }
+    MSPCode msp_code = 50;
+    enum PlanType{
+      PLAN_TYPE_OTHER_NONFEDERAL_PROGRAM=0;
+      PLAN_TYPE_PPO=1;
+      PLAN_TYPE_POS=2;
+      PLAN_TYPE_EPO=3;
+      PLAN_TYPE_HMO_MEDICARE_RISK=4;
+      PLAN_TYPE_AM=5;
+      PLAN_TYPE_BL=6;
+      PLAN_TYPE_CH=7;
+      PLAN_TYPE_CI=8;
+      PLAN_TYPE_DS=9;
+      PLAN_TYPE_FI=10;
+      PLAN_TYPE_HMO=11;
+      PLAN_TYPE_MB=12;
+      PLAN_TYPE_MC=13;
+      PLAN_TYPE_OTHER_FEDERAL_PROGRAM=14;
+      PLAN_TYPE_WORKERS_COMPENSATION_HEALTH_CLAIM=15;
+    }
+    PlanType plan_type = 60;
+    SubscriberName subscriber_name = 70;
+}
+
+//Loop 2010BA
+message SubscriberName{
+    Name name = 10;
+    Address address = 20;
+    CityStateZip csz = 30;
+    Demographic demographic = 40;
+    Reference reference = 50;
+}
+//Segment DMG
+message Demographic{
+string type = 10;
+string birthdate = 20;
+enum Gender{
+    GENDER_F = 0;
+    GENDER_M = 1;
+}
+Reference reference = 30;
+}
+//Segment HL
+message Hierarchy{
+    int64 level = 10;
+    int64 parent_id = 20;
+    int64 type = 30;
+    enum PatientRelationship{
+      PATIENT_RELATIONSHIP_SELF = 0;
+      PATIENT_RELATIONSHIP_OTHER = 1;
+    }
+  }
+
+  
+
+  //Loop 2010BB
+  message PayerName{
+    Name name = 10;
+    Address address = 20;
+    CityStateZip csz = 30;
+  
+  }

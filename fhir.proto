@@ -1,0 +1,74 @@
+syntax = "proto3";
+
+message Invoice{
+    repeated identifier =10;
+    enum InvoiceStatus{
+        INVOICE_STATUS_DRAFT = 0;
+        INVOICE_STATUS_ISSUED = 1;
+        INVOICE_STATUS_BALANCED = 2;
+        INVOICE_STATUS_CANCELLED = 3;
+        INVOICE_STATUS_ENTERED_IN_ERROR = 4;
+
+    }
+    InvoiceStatus invoice_status = 20;
+    string cancelled_reason = 30;
+    repeated string invoice_type = 40;
+    FHIRReference subject = 50; 
+    FHIRReference organization = 60; 
+    string date = 70;
+    Participant participant = 80;
+    FHIRReference issuer = 90;
+    FHIRReference account = 100; 
+    repeated FHIRLineItem line_items = 110;
+
+
+
+}
+
+message FHIRReference{
+    string reference = 10;
+    string reference_type = 20; 
+    repeated string identifier = 30;
+    string display = 40;
+}
+message Participant{
+    string role = 10;
+    FHIRReference actor = 20;
+}
+message FHIRLineItem{
+    int64 seq_no = 10;
+    string chargeitem = 20;
+    repeated FHIRPriceComponent price_component = 30;
+    repeated FHIRPriceComponent total_price_component = 40; 
+    Money total_net = 50;
+    Money total_gross = 60;
+    string payment_terms = 70;
+
+}
+
+message FHIRPriceComponent{
+    enum PriceComponentType{
+        PRICE_COMPONENT_BASE = 0;
+        PRICE_COMPONENT_SURCHARGE = 1;
+        PRICE_COMPONENT_DEDUCTION = 2;
+        PRICE_COMPONENT_DISCOUNT = 3;
+        PRICE_COMPONENT_TAX = 4;
+        PRICE_COMPONENT_INFORMATIONAL = 5;
+    }
+    PriceComponentType price_component_type = 10;
+    string price_component_code = 20;
+    float price_component_factor = 30;
+    Money amount = 40;
+
+}
+
+message Money{
+    float value = 10;
+    string currency_code = 20;
+}
+
+message Annotation{
+    Reference author = 10;
+    string time = 20;
+    string text = 30; 
+}

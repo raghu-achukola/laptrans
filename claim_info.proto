@@ -1,0 +1,151 @@
+syntax = "proto3";
+import "common.proto";
+import "subscriber_loop.proto";
+//Loop 2300
+message ClaimInformation{
+    Claim claim = 10;
+    Date date = 20;
+    PWK pwk = 30;
+    Reference reference = 40;
+    Amount amt = 50;
+    Note note = 60;
+    repeated DiagnosisCode diagnosis_codes = 70;
+    ReferringProvider referring_provider = 80;
+    RenderingProvider rendering_provider = 90;
+    ServiceFacilityLocation service_facility_location = 100;
+    OtherSubscriberInfo other_subscriber_info = 110;
+}
+//Segment CLM
+message Claim{
+    string claim_idenitfier = 10;
+    float claim_amount = 20;
+    enum PlaceOfService{
+        POS_TELEHEALTH = 0;
+        POS_SCHOOL = 1;
+        POS_HOMELESS_SHELTER=2;
+        POS_CORRECTIONAL_FACILITY=3;
+        POS_OFFICE = 4;
+        POS_ASSISTED_LIVING_FACILITY = 5;
+        POS_GROUP_HOME = 6;
+        POS_MOBILE_UNIT =7;
+        POS_TEMPORARY_LODGING = 8;
+        POS_HOSPITAL = 9;
+        POS_OUTPATIENT_HOSPITAL=10;
+        POS_MILITARY_TREATMENT_FACILITY=11;
+        POS_SKILLED_NURSING_FACILITY=12;
+        POS_NURSING_FACILITY = 13;
+        POS_HOSPICE = 14;
+        POS_INDEPENDENT_CLINIC=15;
+        POS_COMMUNITY_MENTAL_HEALTH_CENTER = 16;
+        POS_OUTPATIENT_REHAB = 17;
+        POS_OTHER = 18;
+    }
+    enum ClaimType{
+        CLAIM_TYPE_PROFESSIONAL = 0;
+        CLAIM_TYPE_OTHER = 1;
+    }
+    string claim_type_frequency_code = 30;
+    string provider_signature_indicator = 40;
+    enum ProviderAcceptAssignment{
+        PROVIDER_ASSIGNMENT_ASSIGNED = 0;
+        PROVIDER_ASSIGNMENT_NOT_ASSIGNED = 1;
+    }
+    ProviderAcceptAssignment provider_accept_assignment = 50; 
+    enum ProviderBenefitsAssignmentCertification{
+        PROVIDER_BENEFITS_VALID_SIGNATURE = 0;
+        PROVIDE_BENEFITS_NO_VALID_SIGNATURE = 1;
+    }
+    ProviderBenefitsAssignmentCertification provider_benefits_assignment = 60;
+    enum ReleaseOfInformationCode{
+        RELEASE_OF_INFORMATION_VALID_SIGNATURE = 0;
+        RELEASE_OF_INFORMATION_SIGNATURE_NOT_NEEDED = 1;
+    }
+    ReleaseOfInformationCode release_of_information_code = 70;
+    string client_signature_code = 80;
+    enum RelatedCauseCode{
+        RELATED_CAUSE_EMPLOYMENT = 0;
+        RELATED_CAUSE_AUTO_ACCIDENT=1;
+        RELATED_CAUSE_OTHER_ACCIDENT=2;
+    } 
+    RelatedCauseCode related_cause = 80;
+    string auto_accident_state_code = 90;
+    string special_program_code = 100;
+    string delay_reason_code = 110;
+
+
+    
+
+}
+
+//Segment PWK
+message PWK{
+    enum SupplementalInformationCode{
+        SUPPLEMENTAL_INFO_DRUGS_ADMINISTERED = 0;
+        SUPPLEMENTAL_INFO_TREATMENT_DIAGNOSIS=1;
+        SUPPLEMENTAL_INFO_FUNCTIONAL_GOALS=2;
+        SUPPLEMENTAL_INFO_PLAN_OF_TREATMENT=3;
+        SUPPLEMENTAL_INFO_PROGRESS_REPORT=4;
+        SUPPLEMENTAL_INFO_CONTINUED_TREATMENT=5;
+        SUPPLEMENTAL_INFO_CHEMICAL_ANALYSIS=6;
+        SUPPLEMENTAL_INFO_CERTIFIED_TEST_REPORT =7;
+        SUPPLEMENTAL_INFO_JUSTIFICATION_FOR_ADMISISON = 8;
+    }
+    SupplementalInformationCode supplemental_information_code = 10;
+    enum TransmissionCode{
+        TRANSMISSION_AVAILABLE_ON_REQUEST = 0;
+        TRANSMISSION_MAIL = 1;
+        TRANSMISSION_ELECTRONIC=2;
+        TRANSMISSION_EMAIL=3;
+        TRANSMISSION_FAX=4;
+        TRANSMISSION_FILE_TRANSFER = 5;
+    }
+    TransmissionCode transmission_code = 20;
+    string attachment_control_number_identifier = 30;
+    string attachment_control_number = 40;
+}
+
+//Segment AMT
+message Amount{
+    string amount_qualifier_code = 10;
+    int64 monetary_amount = 20;
+}
+
+//Segment HI
+message DiagnosisCode{
+    enum DiagnosisCodeQualifier{
+        DIAGNOSIS_CODE_PRINCIPAL=0;
+        DIAGNOSIS_CODE_OTHER = 1;
+    }
+    DiagnosisCodeQualifier diagnosis_code_qualifer = 10;
+    string diagnosis_code = 20; 
+}
+
+//Loop 2310A -Referring Provider
+message ReferringProvider{
+    Name name = 10;
+    optional Reference reference = 20;
+}
+//Loop 2310A -Rendering Provider
+message RenderingProvider{
+    Name name = 10;
+    ProviderInfo provider = 20;
+    optional Reference reference = 30;
+}
+
+//Loop 2310C - Service Facility Location
+message ServiceFacilityLocation{
+    Name name = 10;
+    Address address = 20;
+    CityStateZip csz = 30;
+
+}
+
+
+//Loop 2320 - Other Subscriber Info
+message OtherSubscriberInfo{
+    Subscriber subscriber = 10;
+    Amount amt = 20;
+    SubscriberName subscriber_name = 30;
+    Name other_payer_name = 40;
+
+}

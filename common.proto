@@ -1,0 +1,99 @@
+syntax = "proto3";
+
+//Segment PRV
+message ProviderInfo{
+    enum ProviderInfoType{
+        PROVIDER_INFO_TYPE_BILLING = 0;
+        PROVIDER_INFO_TYPE_PERFORMING = 1;
+    }
+    ProviderInfoType provider_info_type= 10;
+    enum ProviderIDQualifierCode{
+        PROVIDER_ID_PXC = 0;
+    }
+    ProviderIDQuaflierCode provider_id_qualifier_code = 20;
+    string identification_code = 30;
+}
+//Segment NM1
+message Name{
+    enum Type{
+        BILLING_PROVIDER = 0;
+        INSURED = 1;
+        SERVICE_LOCATION=2;
+        OTHER = 3;
+    } 
+    enum EntityType{
+        INDIVIDUAL = 1;
+        ORGANIZATION = 2;
+    }
+    string organization_name = 10;
+    string first_name = 20;
+    string middle_name = 30;
+    string suffix = 40;
+    enum IdentificationCodeQualifier{
+        XX = 0;
+        MI = 1;
+        OTHER = 2;
+    }
+    IdentificationCodeQualifier identification_code_qualifier = 50;
+    string identification_code = 60;
+}
+//Segment NM3
+message Address{
+  string line_1 = 10;
+  string line_2 = 20;
+}
+//Segment NM4
+message CityStateZip{
+    string city = 10;
+    string state = 20;
+    string zip = 30;
+}
+//Segment REF
+message Reference{
+  enum IdentificationCodeQualifier{
+    REFERENCE_ID_CODE_QUALIFIER_EI = 0;
+    REFERENCE_ID_CODE_QUALIFIER_SY = 1;
+    REFERENCE_ID_CODE_QUALIFIER_G2 = 2;
+    REFERENCE_ID_CODE_QUALIFIER_Y4 = 3;
+    REFERENCE_ID_CODE_QUALIFIER_G1 = 4;
+    REFERENCE_ID_CODE_QUALIFIER_F8 = 5;
+    REFERENCE_ID_CODE_QUALIFIER_9F = 6;
+    REFERENCE_ID_CODE_QUALIFIER_0B = 7;
+    REFERENCE_ID_CODE_QUALIFIER_1G = 8;
+    REFERENCE_ID_CODE_QUALIFIER_ER = 9;
+    REFERENCE_ID_CODE_QUALIFIER_6R = 10;
+
+  }
+  IdentificationCodeQualifier identification_code_qualifier = 10;
+  string identification_code = 20;
+}
+
+//Segment DTP
+message Date{
+    enum DateQualifier{
+        DATE_QUALIFIER_DISCHARGE_HOSPITALIZED_TO = 0;
+        DATE_QUALIFIER_DISABILITY_UNABLE_TO_WORK_TO = 1;
+        DATE_QUALIFIER_DISABLITY_UNABLE_TO_WORK_FROM = 2;
+        DATE_QUALIFIER_LAST_SEEN = 3;
+        DATE_QUALIFIER_ONSET_OF_ILLNESS=4;
+        DATE_QUALIFIER_ADMISSION= 5;
+        DATE_QUALIFIER_ACCIDENT = 6;
+        DATE_QUALIFIER_INITIAL_TREATMENT =7;
+        DATE_QUALIFIER_REMITTANCE = 8;
+        DATE_QUALIFIER_DATE_OF_SERVICE = 9;
+    }
+    DateQualifier date_qualifier = 10;
+    string date_format = 20;
+    string date=30;
+}
+
+//Segment NTE
+message Note{
+    string note_reference_code = 10;
+    string note_text = 20;
+}
+
+
+
+
+      
